@@ -1,0 +1,10 @@
+/target/
+/rubrica-*.tmp
+
+# Impostazioni locali
+/.vscode/
+/.idea/
+/.settings/
+/.classpath
+/.project
+/use-java21.ps1

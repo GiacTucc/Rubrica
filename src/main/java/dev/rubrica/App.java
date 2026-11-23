@@ -17,7 +17,7 @@ public class App {
             RubricaController controller = new RubricaController(
                     new Rubrica(), new FileRubricaRepository(Path.of("informazioni.txt")));
             try {
-                controller.loadPersone();
+                controller.reloadRubricaFromRepository();
             } catch (IOException e) {
                 JOptionPane.showMessageDialog(
                         null,

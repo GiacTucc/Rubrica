@@ -22,7 +22,7 @@ public class FileRubricaRepository {
     this.file = file.toAbsolutePath(); // C:\Users\...
   }
 
-  public List<Persona> loadPersone() throws IOException {
+  public List<Persona> readPersoneFromFile() throws IOException {
     InputStream input;
     try {
       input = Files.newInputStream(file);
@@ -51,6 +51,10 @@ public class FileRubricaRepository {
     }
     try {
       int eta = Integer.parseInt(campi[4]);
+      if (!Persona.isEtaValida(eta)) {
+        throw new IOException("Età non valida alla riga " + numeroRiga + " di " + file
+            + ": deve essere compresa tra 0 e 120.");
+      }
       return new Persona(campi[0], campi[1], campi[2], campi[3], eta);
     } catch (NumberFormatException e) {
       throw new IOException("Età non valida alla riga " + numeroRiga + " di " + file, e);
@@ -63,6 +67,9 @@ public class FileRubricaRepository {
       validateCampo(persona.getCognome());
       validateCampo(persona.getIndirizzo());
       validateCampo(persona.getTelefono());
+      if (!Persona.isEtaValida(persona.getEta())) {
+        throw new IOException("L'età deve essere compresa tra 0 e 120.");
+      }
     }
 
     // Il file originale viene sostituito solo dopo aver scritto tutti i dati.

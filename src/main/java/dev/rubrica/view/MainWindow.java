@@ -27,12 +27,11 @@ public class MainWindow extends JFrame {
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setLocationRelativeTo(null);
     initializeComponents();
-    loadPersone();
+    refreshTable();
 
+    // Listener pulsanti
     btnNuovo.addActionListener(e -> addPersonaAction());
     btnModifica.addActionListener(e -> editPersonaAction());
-
-    // Listener del pulsante Elimina
     btnElimina.addActionListener(e -> deletePersonaAction());
   }
 
@@ -46,21 +45,21 @@ public class MainWindow extends JFrame {
         return false;
       }
     };
-    // Tabella
     tabella = new JTable(modelloTabella);
-    // Scroll della tabella
     JScrollPane scrollPane = new JScrollPane(tabella);
+
     btnNuovo = ToolbarButtons.createButton("Nuovo", "nuovo");
     btnModifica = ToolbarButtons.createButton("Modifica", "modifica");
     btnElimina = ToolbarButtons.createButton("Elimina", "elimina");
     JToolBar barraStrumenti = ToolbarButtons.createToolbar(btnNuovo, btnModifica, btnElimina);
+    
     setLayout(new BorderLayout());
     add(scrollPane, BorderLayout.CENTER);
     add(barraStrumenti, BorderLayout.NORTH);
 
   }
 
-  private void loadPersone() {
+  private void refreshTable() {
     // Svuoto la tabella
     modelloTabella.setRowCount(0);
     for (Persona persona : controller.getPersone()) {
@@ -93,7 +92,7 @@ public class MainWindow extends JFrame {
     if (confirm == JOptionPane.YES_OPTION) {
       try {
         controller.deletePersona(index);
-        loadPersone();
+        refreshTable();
       } catch (IOException e) {
         JOptionPane.showMessageDialog(
             this,
@@ -108,7 +107,7 @@ public class MainWindow extends JFrame {
     Optional<Persona> persona = new EditorPersona(this, controller::addPersona).showDialog();
     if (persona.isPresent()) {
       // chiusa la finestra, se è stata aggiunta una persona ricarico la tabella
-      loadPersone();
+      refreshTable();
     }
   }
 
@@ -126,7 +125,7 @@ public class MainWindow extends JFrame {
     Optional<Persona> personaEdited = new EditorPersona(this, persona, edited -> controller.editPersona(index, edited))
         .showDialog();
     if (personaEdited.isPresent()) {
-      loadPersone();
+      refreshTable();
     }
   }
 }

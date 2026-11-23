@@ -20,6 +20,10 @@ public class Persona {
     this.eta = eta;
   }
 
+  public static boolean isEtaValida(int eta) {
+    return eta >= 0 && eta <= 120;
+  }
+
   //getters
   public String getNome() {
     return nome;

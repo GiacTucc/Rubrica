@@ -186,7 +186,7 @@ public class EditorPersona extends JDialog {
   private boolean validateEta() {
     try {
       int eta = Integer.parseInt(campoEta.getText().trim());
-      if (eta < 0 || eta > 120) {
+      if (!Persona.isEtaValida(eta)) {
         JOptionPane.showMessageDialog(this, "L'età deve essere compresa tra 0 e 120.");
         campoEta.requestFocusInWindow();
         return false;

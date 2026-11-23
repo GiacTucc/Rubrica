@@ -20,8 +20,8 @@ public class RubricaController {
     this.repository = Objects.requireNonNull(repository, "repository");
   }
 
-  public void loadPersone() throws IOException {
-    rubrica.replacePersone(repository.loadPersone());
+  public void reloadRubricaFromRepository() throws IOException {
+    rubrica.replacePersone(repository.readPersoneFromFile());
   }
 
   public List<Persona> getPersone() {
